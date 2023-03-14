@@ -59,6 +59,85 @@
   .underline {
     border-bottom: 2.5px solid black;
     padding-bottom: 5px;
+    margin-bottom: 5px;
     font-weight: bold;
     /*border-bottom: 2px solid var(--primary-color);*/
   }
+
+
+
+  /* GROUP  Automation START */
+  
+
+  .group-container {
+    padding: 20px;
+   }
+   
+
+   .group-drawer {
+     margin-bottom: 30px;
+   }
+   
+   .group-drawer__content-wrapper {
+     font-size: 1.25em;
+     line-height: 1.4em;
+     max-height: 0px;
+     overflow: hidden;
+     transition: 0.25s ease-in-out;
+   }
+   
+   .group-drawer__title {
+     border-top: #000 1px solid;
+     cursor: pointer;
+     display: block;
+     font-size: 1.25em;
+     font-weight: 700;
+     padding: 30px 0 0 0;
+     position: relative;
+     margin-bottom: 0;
+     transition: all 0.25s ease-out;
+   }
+   
+   .group-drawer__title::after {
+     border-style: solid;
+     border-width: 1px 1px 0 0;
+     content: " ";
+     display: inline-block;
+     float: right;
+     height: 10px;
+     left: 2px;
+     position: relative;
+     right: 20px;
+     top: 2px;
+     transform: rotate(135deg);
+     transition: 0.35s ease-in-out;
+     vertical-align: top;
+     width: 10px;
+   }
+   
+   /* OPTIONAL HOVER STATE */
+   .group-drawer__title:hover { 
+     color: #4E4B52  ;
+   }
+   
+   .group-drawer__trigger:checked
+     + .group-drawer__title
+     + .group-drawer__content-wrapper {
+     max-height: 350px;
+   }
+   
+   .group-drawer__trigger:checked + .group-drawer__title::after {
+     transform: rotate(-45deg);
+     transition: 0.25s ease-in-out;
+   }
+   
+   input[type="checkbox"] {
+     display: none;
+   }
+   
+   @media only screen and (max-width: 600px) {
+     .group-container {
+       padding: 80px;
+     }
+   }
+  /* GROUP  Automation END */
