@@ -1,3 +1,5 @@
+import SignaturePad from "signature_pad";
+import jsPDF from "jspdf";
 
 
 export default class QuoteDetails {
@@ -52,7 +54,64 @@ export default class QuoteDetails {
             console.log(quoteLine.name)
         });
         console.log(this.quoteLines)
+
+        this.addSignaturePad()
   }
+
+  addSignaturePad(){
+
+    //initializs pad
+
+    const canvas = document.getElementById("signature-pad");
+    const signaturePad = new SignaturePad(canvas);
+    
+    const clearButton = document.getElementById("clear-button");
+    clearButton.addEventListener("click", function() {
+      signaturePad.clear();
+    });
+   
+  
+    const signiturePDF = document.getElementById("generate-pdf-button");
+    signiturePDF.addEventListener("click", function() {
+
+    const signatureData = canvas.toDataURL("image/png");
+
+    const doc = new jsPDF();
+    doc.text("My Document Title", 10, 10);
+
+    // Define the table columns and data
+const columns = ["Name", "Email", "Phone"];
+const data = [
+  ["John Doe", "john.doe@example.com", "123-456-7890"],
+  ["Jane Smith", "jane.smith@example.com", "456-789-1234"]
+];
+
+// Set the table column widths
+const columnWidths = [50, 80, 50];
+
+// Draw the table
+doc.autoTable({
+  head: [columns],
+  body: data,
+  startY: 30,
+  margin: { top: 20 },
+  columnWidth: columnWidths,
+});
+
+    // Insert the signature image
+    const imgWidth = 80;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    doc.addImage(signatureData, "PNG", 10, 20, imgWidth, imgHeight);
+
+    // Save the PDF file
+    doc.save("my-document.pdf");
+
+    });
+
+
+
+  }
+
   groupTemplate(group){
     return`
     <div class="group-drawer">

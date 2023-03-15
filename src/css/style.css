@@ -141,3 +141,10 @@
      }
    }
   /* GROUP  Automation END */
+  
+  
+  /* Signature Style */
+
+  canvas{
+    border: black solid 5px;
+  }
