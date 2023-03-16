@@ -1,5 +1,5 @@
 import SignaturePad from "signature_pad";
-import jsPDF from "jspdf";
+import GeneratePDF from "./GeneratePDF.mjs";
 
 
 export default class QuoteDetails {
@@ -73,38 +73,7 @@ export default class QuoteDetails {
   
     const signiturePDF = document.getElementById("generate-pdf-button");
     signiturePDF.addEventListener("click", function() {
-
-    const signatureData = canvas.toDataURL("image/png");
-
-    const doc = new jsPDF();
-    doc.text("My Document Title", 10, 10);
-
-    // Define the table columns and data
-const columns = ["Name", "Email", "Phone"];
-const data = [
-  ["John Doe", "john.doe@example.com", "123-456-7890"],
-  ["Jane Smith", "jane.smith@example.com", "456-789-1234"]
-];
-
-// Set the table column widths
-const columnWidths = [50, 80, 50];
-
-// Draw the table
-doc.autoTable({
-  head: [columns],
-  body: data,
-  startY: 30,
-  margin: { top: 20 },
-  columnWidth: columnWidths,
-});
-
-    // Insert the signature image
-    const imgWidth = 80;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    doc.addImage(signatureData, "PNG", 10, 20, imgWidth, imgHeight);
-
-    // Save the PDF file
-    doc.save("my-document.pdf");
+      new GeneratePDF(canvas)
 
     });
 
