@@ -24,6 +24,7 @@
             <p>Quote Expiration Date: <span id="quote-expiration-date"></span></p> 
         </div>
     </header>
+
     <section class="sold-to-info">
         <div id="sold-to-left">
             <p class="underline">Sold To</p>
@@ -46,13 +47,41 @@
         </div>
     </section>
     <div class=" divider"></div>
+
+    
     <h1>Quote Details</h1>
     <section class="group-container"></section>
-    
+
+      <label>
+        <input type="checkbox" id="acceptTerms" name="acceptTerms">
+        I agree to the <a href="#" id="terms-link">terms and conditions</a>.
+      </label>
+
+      <div class="modal-window">
+        <div class="modal-content"></div>
+      </div>
+      <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="accept-terms">I accept the terms and conditions:</label>
+            <input type="checkbox" name="accept-terms" id="accept-terms" required>
+        <br>
+
         <div class="signature-container">
-          <canvas id="signature-pad"></canvas>
-          <button id="clear-button">Clear</button>
-          <button id="generate-pdf-button">Generate PDF</button>
+            <canvas id="signature-pad"></canvas>
+            <div class="signature-buttons">
+                <button id="clear-button">Clear</button>
+                <!-- <button id="generate-pdf-button">Generate PDF</button> -->
+            </div>
         </div>
+
+        <br>
+        <button type="submit" id="generate-pdf-button" value="Submit">sign</button>
+      </form>
+
 </body>
 </html>
