@@ -148,3 +148,47 @@
   canvas{
     border: black solid 5px;
   }
+  
+  .signature-container{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  canvas{
+    margin:  10px 0px;
+  }
+
+  /* CSS for modal window */
+.modal-window {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 150px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  font-size: 10px;
+}
+
+button{
+  background-color: red;
+ border-radius: 10px;
+ padding: 10px;
+ font-weight: bolder;
+ color:white
+
+}

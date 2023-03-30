@@ -1,9 +1,11 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import html2canvas from "html2canvas"
 
 export default class GeneratePDF {
-  constructor(canvas) {
+  constructor(canvas, tableData) {
     this.canvas = canvas;
+    this.tableData = tableData
     this.PDFTemplate()
   }
   
@@ -15,78 +17,27 @@ export default class GeneratePDF {
     doc.text("My Document Title", 10, 10);
 
     // Define the table columns and data
-    const columns = ["Name", "Email", "Phone"];
-    const data = [
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-      ["John Doe", "john.doe@example.com", "123-456-7890"],
-      ["Jane Smith", "jane.smith@example.com", "456-789-1234"],
-    ];
+    const columns = ["Item", "Description", "Qty", "Price"];
+    //const data = [["BP-50C31","john.doe@example.com","123-456-7890"],["BP-DE12","john.doe@example.com","123-456-7890"],["BP-FN11","john.doe@example.com","123-456-7890"],["Sharp 90 Day Warranty","john.doe@example.com","123-456-7890"],["Atlas/Titan Startup Bundle NASPO","john.doe@example.com","123-456-7890"],["BP-NT70BA","john.doe@example.com","123-456-7890"],["BP-NT70CA","john.doe@example.com","123-456-7890"],["BP-NT70MA","john.doe@example.com","123-456-7890"],["BP-NT70YA","john.doe@example.com","123-456-7890"],["SURGE-15","john.doe@example.com","123-456-7890"],["ITOM","john.doe@example.com","123-456-7890"],["Existing Equipment","john.doe@example.com","123-456-7890"],["Existing Equipment","john.doe@example.com","123-456-7890"]]
+
+    /* Import table straight from page
+    html2canvas(document.querySelector('table')).then(function (canvas) {
+      // add the captured image to the PDF
+      doc.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 180, 180);
+      // save the PDF
+      doc.save('pdf-table.pdf');
+    });
+
+    */
+
 
     // Set the table column widths
     const columnWidths = [50, 80, 50];
     
-
     // Draw the table
     doc.autoTable({
       head: [columns],
-      body: data,
+      body: this.tableData,
       startY: 30,
       margin: { top: 20 },
       columnWidth: columnWidths,
