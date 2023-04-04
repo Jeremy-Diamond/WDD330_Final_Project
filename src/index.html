@@ -52,23 +52,27 @@
     <h1>Quote Details</h1>
     <section class="group-container"></section>
 
-      <label>
-        <input type="checkbox" id="acceptTerms" name="acceptTerms">
-        I agree to the <a href="#" id="terms-link">terms and conditions</a>.
-      </label>
+     
+
+       
+
 
       <div class="modal-window">
         <div class="modal-content"></div>
       </div>
       <form id="myForm">
+
+        <label for="accept-terms">
+            <input type="checkbox" name="accept-terms" id="accept-terms" required>
+            I agree to the <a href="#" id="terms-link">terms and conditions</a>
+        </label>
+        
+        <br>
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" required>
         <br>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required>
-        <br>
-        <label for="accept-terms">I accept the terms and conditions:</label>
-            <input type="checkbox" name="accept-terms" id="accept-terms" required>
         <br>
 
         <div class="signature-container">
@@ -80,7 +84,8 @@
         </div>
 
         <br>
-        <button type="submit" id="generate-pdf-button" value="Submit">sign</button>
+        <button id="generate-pdf-button">sign</button>
+        <!-- <button type="submit" id="generate-pdf-button" value="Submit">sign</button> -->
       </form>
 
 </body>
