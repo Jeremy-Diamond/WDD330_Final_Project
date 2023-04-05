@@ -1,12 +1,12 @@
 :root {
-    --font-body: Arial, Helvetica, sans-serif;
+    --font-body: Calibri, Arial, sans-serif;
     --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
     /* colors */
-    --primary-color: #f0a868;
-    --secondary-color: #525b0f;
-    --tertiary-color: #a4b8c4;
-    --light-grey: #d0d0d0;
-    --dark-grey: #303030;
+    --primary-color: #cf1f37;
+    --secondary-color: #333333;
+    --tertiary-color: #1591bb;
+    --light-grey: #e0e0e0;
+    --white: #ffffff;
   
     /* sizes */
     --font-base: 18px;
@@ -51,7 +51,7 @@
   }
 
   .divider {
-    border-bottom: 5px solid red;
+    border-bottom: 5px solid var(--primary-color);
     margin: 20px 0px;
     /*border-bottom: 2px solid var(--primary-color);*/
   }
@@ -185,7 +185,7 @@
 }
 
 button{
-  background-color: red;
+  background-color: var(--primary-color);
  border-radius: 10px;
  padding: 10px;
  font-weight: bolder;
@@ -205,3 +205,22 @@ input[type="checkbox"] {
   margin-right: 10px;
 }
 */
+
+#closing-section{
+  display: grid ;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+label{
+  color: var(--secondary-color);
+  font-size: larger
+  ;
+}
+
+input{
+  border: none;
+  border-bottom: #333333 solid 2px;
+}

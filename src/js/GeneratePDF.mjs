@@ -1,10 +1,10 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import html2canvas from "html2canvas"
 
 export default class GeneratePDF {
-  constructor(canvas, tableData) {
+  constructor(canvas, tableData,quoteDetails) {
     this.canvas = canvas;
+    this.quoteDetails = quoteDetails
     this.tableData = tableData
     this.PDFTemplate()
   }
@@ -14,7 +14,14 @@ export default class GeneratePDF {
     const signatureData = this.canvas.toDataURL("image/png");
 
     const doc = new jsPDF();
-    doc.text("My Document Title", 10, 10);
+    console.log(this.quoteDetails)
+    doc.text(`Quote Number: ${this.quoteDetails.quote.quoteNumber}`, 130, 20);
+    doc.text(`Customer #: ${this.quoteDetails.quote.customerNumber}`, 130, 28);
+    doc.text(`Sales Rep: ${this.quoteDetails.quote.salesRep.name}`, 130, 36);
+
+    doc.addImage("https://lesolson.com/wp-content/uploads/2021/10/BLKREDlogo.png", "PNG", 10, 10, 80, 20);
+    
+    doc.addImage(window.location.href, "JPEG", 0, 0, 210, 297);
 
     // Define the table columns and data
     const columns = ["Item", "Description", "Qty", "Price"];
@@ -38,16 +45,16 @@ export default class GeneratePDF {
     doc.autoTable({
       head: [columns],
       body: this.tableData,
-      startY: 30,
+      startY: 40,
       margin: { top: 20 },
       columnWidth: columnWidths,
 
       styles: {
-        lineColor: [44, 62, 80],
-        lineWidth: 1,
+        lineColor: [207,31,55],
+        lineWidth: 0.5,
       },
       headStyles: {
-        fillColor: [241, 196, 15],
+        fillColor: [51,51,51],
         fontSize: 15,
       },
       footStyles: {
@@ -55,14 +62,22 @@ export default class GeneratePDF {
         fontSize: 15,
       },
       bodyStyles: {
-        fillColor: [52, 73, 94],
-        textColor: 240,
+        fillColor: [225, 225, 225],
+        textColor: [51,51,51],
       },
       alternateRowStyles: {
-        fillColor: [74, 96, 117],
+        fillColor: [255, 255, 255],
+        textColor: [51,51,51],
       },
 
     });
+
+    //Insert Total and Signer details
+    doc.text(`Quote Total: $${this.quoteDetails.quote.quoteTotal.toFixed(2)}`, 100, doc.lastAutoTable.finalY + 20);
+    doc.text("Signer Name: Jeremy Diamond", 100, doc.lastAutoTable.finalY + 28);
+    doc.text("Signer Title: Owner" , 100, doc.lastAutoTable.finalY + 36);
+    doc.text("Signer Email: socjeremyd@gmail.com", 100, doc.lastAutoTable.finalY + 43);
+
     
     // Insert the signature image
     const imgWidth = 80;
