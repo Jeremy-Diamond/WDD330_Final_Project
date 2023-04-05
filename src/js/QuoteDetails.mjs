@@ -37,6 +37,9 @@ export default class QuoteDetails {
       document.querySelector("#contact-name").innerHTML = this.workigQuote.quote.primaryContact.name
       document.querySelector("#contact-email").innerHTML = this.workigQuote.quote.primaryContact.email
       document.querySelector("#contact-phone").innerHTML = this.workigQuote.quote.primaryContact.phone
+
+      //Set Total Price
+      document.querySelector("#orderTotal").innerHTML = this.workigQuote.quote.quoteTotal
       
       //Create Groups
 
@@ -57,7 +60,7 @@ export default class QuoteDetails {
             //console.log(quoteLine.name)
         });
         //console.log(this.quoteLines)
-        this.addSignaturePad(this.pdfGroups)
+        this.addSignaturePad(this.pdfGroups,this.workigQuote)
         //console.log(this.pdfGroups)
 
         const termsLink = document.querySelector("#terms-link"); // get link element
@@ -132,7 +135,7 @@ export default class QuoteDetails {
     modalWindow.style.display = "block";
   }
 
-  addSignaturePad(groups){
+  addSignaturePad(groups,quoteDetails){
 
     //initializs pad
 
@@ -168,7 +171,7 @@ const requiredFields = form.querySelectorAll("[required]");
   } else {
     // All required fields have been filled out 
     event.preventDefault();   
-    new GeneratePDF(canvas, groups);
+    new GeneratePDF(canvas, groups,quoteDetails);
   }
       }
     });
