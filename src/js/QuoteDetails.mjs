@@ -157,6 +157,7 @@ const requiredFields = form.querySelectorAll("[required]");
 
   requiredFields.forEach(function(field) {
     if (field.value.trim() === "") {
+      event.preventDefault();
       hasEmptyField = true;
     }
   });
@@ -165,7 +166,8 @@ const requiredFields = form.querySelectorAll("[required]");
     event.preventDefault();
     alert("Please fill out all required fields.");
   } else {
-    // All required fields have been filled out    
+    // All required fields have been filled out 
+    event.preventDefault();   
     new GeneratePDF(canvas, groups);
   }
       }
@@ -178,7 +180,7 @@ const requiredFields = form.querySelectorAll("[required]");
   groupTemplate(group){
     return`
     <div class="group-drawer">
-    <input class="group-drawer__trigger" id="group-drawer-${this.groupcounter}" type="checkbox" /><label class="group-drawer__title" for="group-drawer-${this.groupcounter}">${group.name} </label>
+    <input class="group-drawer__trigger" id="group-drawer-${this.groupcounter}" type="checkbox" /><label class="group-drawer__title" for="group-drawer-${this.groupcounter}">${group.name}  (Subtotal: $${group.subtotal.toFixed(2)}) </label>
     <div class="group-drawer__content-wrapper">
       <div class="group-drawer__content">
         ${this.createGroupTable(group)}
@@ -233,6 +235,4 @@ const requiredFields = form.querySelectorAll("[required]");
     
     return tableContent.innerHTML
   }
-  }
-
-
+}
